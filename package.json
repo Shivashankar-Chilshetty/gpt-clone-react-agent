@@ -1,0 +1,17 @@
+{
+  "name": "chatgpt-react-agent",
+  "version": "1.0.0",
+  "description": "React agent implementation for chatgpt",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shivashankar",
+  "license": "MIT",
+  "dependencies": {
+    "@langchain/core": "^0.3.78",
+    "@langchain/groq": "^0.2.4",
+    "@langchain/langgraph": "^0.4.9"
+  }
+}
