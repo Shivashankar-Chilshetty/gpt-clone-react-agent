@@ -1,17 +1,23 @@
 import { ChatGroq } from "@langchain/groq";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
+import { TavilySearch } from "@langchain/tavily";
 
 async function main() {
     //creating groq model
     const model = new ChatGroq({
-        model: "groq/compound",
+        model: "openai/gpt-oss-120b",
         temperature: 0
+    });
+
+    const search = new TavilySearch({
+        maxResults: 3,
+        topic: "general"
     });
 
     //creating react agent
     const agent = createReactAgent({
         llm: model,
-        tools: [],
+        tools: [search],
     });
 
     //calling the agent
