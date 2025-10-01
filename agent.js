@@ -5,6 +5,8 @@ import { TavilySearch } from "@langchain/tavily";
 import { z } from "zod";
 import { writeFileSync } from "node:fs";
 import readline from "node:readline/promises";
+import { MemorySaver } from "@langchain/langgraph";
+
 
 async function main() {
     //creating groq model
@@ -34,12 +36,16 @@ async function main() {
             }),
         }
     );
+    //using memory saver as checkpointer to save the past messages
+    const checkpointer = new MemorySaver();
 
     //creating react agent
     const agent = createReactAgent({
         llm: model,
         tools: [search, calendarEvents],
+        checkpointer: checkpointer
     });
+
 
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
@@ -58,7 +64,8 @@ async function main() {
                     content: userQuery,
                 },
             ],
-        });
+        }, { configurable: { thread_id: '1'}});
+        
         console.log('Assistant:', result.messages[result.messages.length - 1].content)
     }
 
